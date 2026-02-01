@@ -1,4 +1,5 @@
 import AnimatedBackground from '@/components/ui/AnimatedBackground';
+import Navbar from '@/components/ui/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
@@ -9,6 +10,7 @@ export default function Home() {
   return (
     <>
       <AnimatedBackground />
+      <Navbar />
       <main className="relative z-10">
         <HeroSection />
         <AboutSection />
