@@ -81,7 +81,7 @@ export default function HeroSection() {
           variants={item}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          Brasil · Disponível para projetos e oportunidades
+          São Paulo · Disponível para projetos e oportunidades
         </motion.p>
 
         <motion.div
