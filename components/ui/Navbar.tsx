@@ -62,17 +62,16 @@ export default function Navbar() {
               <li key={link.href}>
                 <motion.a
                   href={link.href}
-                  className="relative px-4 py-2.5 text-[13px] font-medium text-white/80 hover:text-white rounded-xl transition-colors"
+                  className="group relative block px-4 py-2.5 text-[13px] font-medium text-white/80 rounded-xl transition-colors duration-200"
                   whileHover={{ y: -1 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <span className="relative z-10">{link.label}</span>
-                  <motion.span
-                    className="absolute inset-0 rounded-xl bg-white/10"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.2 }}
+                  <span className="relative z-10 transition-all duration-200 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.9),0_0_12px_rgba(34,211,238,0.6)]">
+                    {link.label}
+                  </span>
+                  <span
+                    className="absolute inset-0 rounded-xl bg-cyan-500/20 opacity-0 shadow-[0_0_10px_rgba(34,211,238,0.7),0_0_25px_rgba(34,211,238,0.5),0_0_40px_rgba(34,211,238,0.3)] transition-opacity duration-200 group-hover:opacity-100"
                   />
                 </motion.a>
               </li>
@@ -116,7 +115,7 @@ export default function Navbar() {
                 >
                   <a
                     href={link.href}
-                    className="block px-4 py-2.5 text-sm font-medium text-white/80 hover:text-white hover:bg-white/6 rounded-xl transition-colors"
+                    className="block px-4 py-2.5 text-sm font-medium text-white/80 rounded-xl transition-all duration-200 hover:text-white hover:bg-cyan-500/10 hover:shadow-[0_0_10px_rgba(34,211,238,0.7),0_0_25px_rgba(34,211,238,0.5)] hover:drop-shadow-[0_0_6px_rgba(34,211,238,0.8)]"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}

@@ -58,16 +58,10 @@ export default function AboutSection() {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <p>
-            Sou desenvolvedor Full-Stack com foco em criar experiências digitais que
-            funcionam bem e escalam. Gosto de resolver problemas reais com código,
-            desde a interface até a API e a infraestrutura.
+            Sou um desenvolvedor júnior apaixonado por tecnologia e em constante busca por conhecimento. Cada linha de código que escrevo é uma oportunidade de aprender algo novo e me superar. Minha jornada na programação começou por curiosidade, mas rapidamente se transformou em uma verdadeira paixão.
           </p>
           <p>
-            Trabalho principalmente com <strong className="text-white">React</strong>,{' '}
-            <strong className="text-white">Next.js</strong> e{' '}
-            <strong className="text-white">Node.js</strong>, sempre priorizando
-            TypeScript e boas práticas. Busco entregar soluções simples, testáveis e
-            fáceis de evoluir.
+            Estou determinado a construir uma carreira sólida na área de desenvolvimento, trazendo energia, dedicação e vontade de crescer. Acredito que a primeira oportunidade é apenas o começo de uma trajetória de muito aprendizado e contribuições significativas.
           </p>
         </motion.div>
 
