@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 const container = {
@@ -27,6 +28,20 @@ export default function HeroSection() {
       variants={container}
     >
       <div className="text-center max-w-3xl mx-auto w-full text-white">
+        <motion.div
+          className="mb-8 flex justify-center"
+          variants={item}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+        >
+          <Image
+            src="/images/foto-perfil.png"
+            alt="Lucas - Desenvolvedor"
+            width={160}
+            height={160}
+            className="rounded-full object-cover ring-2 ring-white/20 ring-offset-2 ring-offset-[#0a0a0f]"
+            priority
+          />
+        </motion.div>
         <motion.p
           className="text-blue-400 text-sm font-medium tracking-widest uppercase mb-4 md:text-base"
           variants={item}

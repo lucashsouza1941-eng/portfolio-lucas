@@ -62,7 +62,7 @@ export default function Navbar() {
               <li key={link.href}>
                 <motion.a
                   href={link.href}
-                  className="group relative block px-4 py-2.5 text-[13px] font-medium text-white/80 rounded-xl transition-colors duration-200"
+                  className="group relative block px-4 py-2.5 text-[15px] md:text-base font-bold text-white/80 rounded-xl transition-colors duration-200"
                   whileHover={{ y: -1 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.2 }}
@@ -115,7 +115,7 @@ export default function Navbar() {
                 >
                   <a
                     href={link.href}
-                    className="block px-4 py-2.5 text-sm font-medium text-white/80 rounded-xl transition-all duration-200 hover:text-white hover:bg-cyan-500/10 hover:shadow-[0_0_10px_rgba(34,211,238,0.7),0_0_25px_rgba(34,211,238,0.5)] hover:drop-shadow-[0_0_6px_rgba(34,211,238,0.8)]"
+                    className="block px-4 py-2.5 text-base font-bold text-white/80 rounded-xl transition-all duration-200 hover:text-white hover:bg-cyan-500/10 hover:shadow-[0_0_10px_rgba(34,211,238,0.7),0_0_25px_rgba(34,211,238,0.5)] hover:drop-shadow-[0_0_6px_rgba(34,211,238,0.8)]"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}
