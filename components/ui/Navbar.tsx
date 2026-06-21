@@ -58,7 +58,7 @@ export default function Navbar() {
         <div className="flex items-center">
           <div className="flex-1 md:hidden" />
           <ul className="hidden md:flex items-center justify-center gap-0.5 flex-1">
-            {navLinks.map((link, i) => (
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <motion.a
                   href={link.href}

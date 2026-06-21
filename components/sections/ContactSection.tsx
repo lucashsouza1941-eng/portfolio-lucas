@@ -2,34 +2,26 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Mail, MapPin, Clock } from 'lucide-react';
+import { GithubIcon, LinkedinIcon } from '@/components/ui/BrandIcons';
 
 const socialLinks = [
   {
     name: 'LinkedIn',
-    href: 'https://linkedin.com/in/seu-usuario',
-    icon: (
-      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-      </svg>
-    ),
+    // TODO: troque pelo seu usuário real do LinkedIn
+    href: 'https://www.linkedin.com/in/lucashsouza',
+    icon: <LinkedinIcon className="h-5 w-5" />,
   },
   {
     name: 'GitHub',
-    href: 'https://github.com/seu-usuario',
-    icon: (
-      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-        <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-      </svg>
-    ),
+    // TODO: troque pelo seu usuário real do GitHub
+    href: 'https://github.com/lucashsouza',
+    icon: <GithubIcon className="h-5 w-5" />,
   },
   {
     name: 'E-mail',
     href: 'mailto:lucashsouza.1941@gmail.com',
-    icon: (
-      <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    ),
+    icon: <Mail className="h-5 w-5" />,
   },
   {
     name: 'WhatsApp',
@@ -42,35 +34,50 @@ const socialLinks = [
   },
 ];
 
+const inputClass =
+  'w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 outline-none transition-colors focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500';
+
+// Crie um formulário grátis em https://formspree.io e cole o endpoint
+// em .env.local como NEXT_PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/xxxxxxx
+const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
 export default function ContactSection() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setStatus('sending');
-    // Substitua por sua API ou serviço (Formspree, Resend, etc.)
-    setTimeout(() => setStatus('sent'), 1000);
+
+    try {
+      if (!FORMSPREE_ENDPOINT) {
+        throw new Error('NEXT_PUBLIC_FORMSPREE_ENDPOINT não configurado');
+      }
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      if (!res.ok) throw new Error('Falha no envio');
+      setStatus('sent');
+      form.reset();
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
-    <motion.section
-      id="contato"
-      className="py-24 px-4 relative"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-    >
-      <div className="max-w-4xl mx-auto">
+    <section id="contato" className="bg-[#0a0a0a] py-24 px-4">
+      <div className="mx-auto max-w-4xl">
         <motion.div
-          className="text-center mb-14"
+          className="mb-14 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl font-bold text-white md:text-4xl">Contato</h2>
-          <p className="mt-2 text-blue-400 text-sm font-medium tracking-widest uppercase">
+          <p className="mt-2 text-sm font-medium uppercase tracking-widest text-cyan-400">
             Vamos conversar
           </p>
         </motion.div>
@@ -78,39 +85,35 @@ export default function ContactSection() {
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-12">
           {/* Info + redes */}
           <motion.div
-            className="lg:col-span-2 space-y-8"
+            className="space-y-8 lg:col-span-2"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-              <h3 className="text-lg font-semibold text-white mb-4">Informações</h3>
-              <ul className="space-y-4 text-white/80 text-sm">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
+              <h3 className="mb-4 text-lg font-semibold text-white">Informações</h3>
+              <ul className="space-y-4 text-sm text-white/80">
                 <li className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/20 text-blue-400">
-                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-cyan-500/15 text-cyan-400">
+                    <Mail className="h-4 w-4" />
                   </span>
-                  <a href="mailto:lucashsouza.1941@gmail.com" className="text-white/80 hover:text-blue-400 transition-colors">
+                  <a
+                    href="mailto:lucashsouza.1941@gmail.com"
+                    className="text-white/80 transition-colors hover:text-cyan-400"
+                  >
                     lucashsouza.1941@gmail.com
                   </a>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/20 text-blue-400">
-                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-cyan-500/15 text-cyan-400">
+                    <MapPin className="h-4 w-4" />
                   </span>
                   São Paulo
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/20 text-blue-400">
-                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-cyan-500/15 text-cyan-400">
+                    <Clock className="h-4 w-4" />
                   </span>
                   Disponível para projetos
                 </li>
@@ -118,7 +121,7 @@ export default function ContactSection() {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Redes</h3>
+              <h3 className="mb-4 text-lg font-semibold text-white">Redes</h3>
               <div className="flex flex-wrap gap-3">
                 {socialLinks.map((link, i) => (
                   <motion.a
@@ -126,7 +129,7 @@ export default function ContactSection() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-white/80 transition-colors hover:border-blue-500/50 hover:bg-blue-500/20 hover:text-blue-400"
+                    className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-white/80 transition-colors hover:border-cyan-500/50 hover:bg-cyan-500/15 hover:text-cyan-400"
                     initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -152,47 +155,27 @@ export default function ContactSection() {
           >
             <form
               onSubmit={handleSubmit}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm md:p-8"
+              className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md md:p-8"
             >
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label htmlFor="contact-name" className="mb-2 block text-sm font-medium text-white/90">
                     Nome
                   </label>
-                  <input
-                    id="contact-name"
-                    name="name"
-                    type="text"
-                    required
-                    className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder-white/40 outline-none transition-colors focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20"
-                    placeholder="Seu nome"
-                  />
+                  <input id="contact-name" name="name" type="text" required className={inputClass} placeholder="Seu nome" />
                 </div>
                 <div>
                   <label htmlFor="contact-email" className="mb-2 block text-sm font-medium text-white/90">
                     E-mail
                   </label>
-                  <input
-                    id="contact-email"
-                    name="email"
-                    type="email"
-                    required
-                    className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder-white/40 outline-none transition-colors focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20"
-                    placeholder="seu@email.com"
-                  />
+                  <input id="contact-email" name="email" type="email" required className={inputClass} placeholder="seu@email.com" />
                 </div>
               </div>
               <div className="mt-5">
                 <label htmlFor="contact-subject" className="mb-2 block text-sm font-medium text-white/90">
                   Assunto
                 </label>
-                <input
-                  id="contact-subject"
-                  name="subject"
-                  type="text"
-                  className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder-white/40 outline-none transition-colors focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20"
-                  placeholder="Projeto, oportunidade..."
-                />
+                <input id="contact-subject" name="subject" type="text" className={inputClass} placeholder="Projeto, oportunidade..." />
               </div>
               <div className="mt-5">
                 <label htmlFor="contact-message" className="mb-2 block text-sm font-medium text-white/90">
@@ -203,26 +186,44 @@ export default function ContactSection() {
                   name="message"
                   rows={5}
                   required
-                  className="w-full resize-y rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder-white/40 outline-none transition-colors focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 min-h-[120px]"
+                  className={`${inputClass} min-h-[120px] resize-y`}
                   placeholder="Conte um pouco sobre o que você precisa..."
                 />
               </div>
               <motion.button
                 type="submit"
                 disabled={status === 'sending'}
-                className="mt-6 w-full rounded-xl bg-blue-500 py-3.5 text-sm font-medium text-white transition-colors hover:bg-blue-600 disabled:opacity-60 disabled:cursor-not-allowed md:w-auto md:min-w-[160px]"
+                className="mt-6 w-full rounded-xl bg-cyan-500 py-3.5 text-sm font-semibold text-[#0a0a0a] transition-colors hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-60 md:w-auto md:min-w-[160px]"
                 whileHover={status === 'idle' ? { scale: 1.02 } : {}}
                 whileTap={status === 'idle' ? { scale: 0.98 } : {}}
+                style={{ boxShadow: '0 0 24px rgba(34,211,238,0.3)' }}
               >
                 {status === 'sending' && 'Enviando...'}
                 {status === 'sent' && 'Mensagem enviada!'}
                 {status === 'error' && 'Erro. Tente novamente'}
                 {status === 'idle' && 'Enviar mensagem'}
               </motion.button>
+
+              <p aria-live="polite" className="mt-4 text-sm">
+                {status === 'sent' && (
+                  <span className="text-green-400">
+                    Obrigado! Sua mensagem foi enviada. Retorno em breve.
+                  </span>
+                )}
+                {status === 'error' && (
+                  <span className="text-red-400">
+                    Não foi possível enviar. Tente novamente ou escreva para{' '}
+                    <a href="mailto:lucashsouza.1941@gmail.com" className="underline hover:text-cyan-400">
+                      lucashsouza.1941@gmail.com
+                    </a>
+                    .
+                  </span>
+                )}
+              </p>
             </form>
           </motion.div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

@@ -1,9 +1,13 @@
+export type ProjectCategory = 'Front-end' | 'Back-end' | 'Full-Stack';
+
 export interface Project {
   id: string;
   title: string;
   shortDescription: string;
   fullDescription: string;
   stack: string[];
+  category: ProjectCategory;
+  featured?: boolean;
   imageUrl: string;
   imageAlt: string;
   liveUrl?: string;
@@ -18,6 +22,8 @@ export const projects: Project[] = [
     fullDescription:
       'Dashboard completo com autenticação, gráficos interativos (Chart.js), filtros por período, exportação de relatórios e tema claro/escuro. Integração com API REST e cache para performance.',
     stack: ['React', 'TypeScript', 'Tailwind', 'Chart.js', 'Node.js'],
+    category: 'Full-Stack',
+    featured: true,
     imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
     imageAlt: 'Dashboard com gráficos e métricas',
     liveUrl: '#',
@@ -30,6 +36,8 @@ export const projects: Project[] = [
     fullDescription:
       'E-commerce com catálogo, carrinho, checkout simulado, painel administrativo para produtos e pedidos. API com Node.js, banco PostgreSQL, upload de imagens e notificações por e-mail.',
     stack: ['Next.js', 'PostgreSQL', 'Stripe', 'Prisma', 'Tailwind'],
+    category: 'Full-Stack',
+    featured: true,
     imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
     imageAlt: 'E-commerce e loja online',
     liveUrl: '#',
@@ -42,6 +50,8 @@ export const projects: Project[] = [
     fullDescription:
       'API REST para gestão de recursos com autenticação JWT, rate limiting, validação com Zod, documentação Swagger e testes automatizados. Deploy em container Docker.',
     stack: ['Node.js', 'Express', 'PostgreSQL', 'Docker', 'Swagger'],
+    category: 'Back-end',
+    featured: true,
     imageUrl: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80',
     imageAlt: 'Código e API',
     liveUrl: '#',
@@ -54,6 +64,7 @@ export const projects: Project[] = [
     fullDescription:
       'To-do app com listas, subtarefas, prioridades, drag-and-drop (dnd-kit), filtros e persistência local. PWA com suporte offline e notificações.',
     stack: ['React', 'TypeScript', 'Zustand', 'Tailwind', 'PWA'],
+    category: 'Front-end',
     imageUrl: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80',
     imageAlt: 'Lista de tarefas',
     liveUrl: '#',
@@ -66,6 +77,7 @@ export const projects: Project[] = [
     fullDescription:
       'Blog com artigos, categorias, comentários, busca e CMS headless (Markdown). SSG com Next.js, syntax highlight para código e SEO otimizado com meta tags dinâmicas.',
     stack: ['Next.js', 'MDX', 'Tailwind', 'Vercel'],
+    category: 'Full-Stack',
     imageUrl: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80',
     imageAlt: 'Blog e artigos',
     liveUrl: '#',
@@ -78,6 +90,7 @@ export const projects: Project[] = [
     fullDescription:
       'Chat com salas, mensagens em tempo real via Socket.io, indicador de digitação, histórico e notificações. Front em React com estados otimizados e back em Node.js.',
     stack: ['React', 'Socket.io', 'Node.js', 'Tailwind', 'Redis'],
+    category: 'Full-Stack',
     imageUrl: 'https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=800&q=80',
     imageAlt: 'Chat e mensagens',
     liveUrl: '#',
@@ -90,6 +103,7 @@ export const projects: Project[] = [
     fullDescription:
       'Portfólio com seções Hero, Sobre, Projetos, Habilidades e Contato. Animações com Framer Motion, design responsivo, modo escuro e performance otimizada com lazy loading.',
     stack: ['Next.js', 'Framer Motion', 'Tailwind', 'TypeScript'],
+    category: 'Front-end',
     imageUrl: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80',
     imageAlt: 'Portfólio e site pessoal',
     liveUrl: '#',
@@ -102,6 +116,7 @@ export const projects: Project[] = [
     fullDescription:
       'Aplicativo de clima com busca por cidade, geolocalização, previsão de 5 dias, ícones dinâmicos e persistência de favoritos. Consumo de API externa com cache e tratamento de erros.',
     stack: ['React', 'TypeScript', 'OpenWeather API', 'Tailwind'],
+    category: 'Front-end',
     imageUrl: 'https://images.unsplash.com/photo-1504386106331-3e4e71712b38?w=800&q=80',
     imageAlt: 'Previsão do tempo',
     liveUrl: '#',
@@ -114,7 +129,8 @@ export const projects: Project[] = [
     fullDescription:
       'Fluxo completo de auth: registro, login, recuperação de senha, verificação de e-mail e perfil editável. JWT + refresh token, bcrypt para senhas e proteção de rotas no front e back.',
     stack: ['Next.js', 'NextAuth', 'Prisma', 'PostgreSQL', 'Tailwind'],
-    imageUrl: 'https://images.unsplash.com/photo-1633265486064-086b457458ec?w=800&q=80',
+    category: 'Full-Stack',
+    imageUrl: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=800&q=80',
     imageAlt: 'Login e autenticação',
     liveUrl: '#',
     repoUrl: '#',
@@ -126,6 +142,7 @@ export const projects: Project[] = [
     fullDescription:
       'Landing page para produto SaaS com hero, features, pricing, depoimentos e formulário de contato. Integração com Resend para e-mails, analytics e A/B testing de headlines.',
     stack: ['Next.js', 'Tailwind', 'Resend', 'Vercel Analytics'],
+    category: 'Front-end',
     imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
     imageAlt: 'Landing page e SaaS',
     liveUrl: '#',
